@@ -1,6 +1,8 @@
 #![no_std]
 #![no_main]
 
+mod led;
+
 extern crate panic_halt;
 
 use arduino_mega2560::pwm;
@@ -9,9 +11,6 @@ use arduino_mega2560::prelude::*;
 #[arduino_mega2560::entry]
 fn main() -> ! {
     let dp = arduino_mega2560::Peripherals::take().unwrap();
-
-    let mut delay = arduino_mega2560::Delay::new();
-
     let mut pins = arduino_mega2560::Pins::new(
         dp.PORTA,
         dp.PORTB,
@@ -25,6 +24,7 @@ fn main() -> ! {
         dp.PORTK,
         dp.PORTL,
     );
+
     let mut timer0 = pwm::Timer0Pwm::new(dp.TC0, pwm::Prescaler::Prescale64);
     let mut timer1 = pwm::Timer1Pwm::new(dp.TC1, pwm::Prescaler::Prescale64);
 
